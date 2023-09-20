@@ -1,5 +1,8 @@
 ## The Convergence Protocol  (September 23)
 
+### Prompts
+[Prompts at ChatGPT](https://chat.openai.com/share/245b9fdf-8846-4b8e-8313-7a638b2a5990)
+
 ### Procedures
 
 First task is to dig something up that you think could be optimized. Once I can confirm that it's valid, we can move on to PR creation.
