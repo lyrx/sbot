@@ -19,7 +19,7 @@ checks = [
 ]
 
 # Test
-# file_path = "sample.sol"
-# results = analyze_solidity_file(file_path, checks)
-# for r in results:
-#     print(r)
+file_path = "/Users/alex/git/Web3Academy/hats-audit/contracts/CvgControlTower.sol"
+results = analyze_solidity_file(file_path, checks)
+for r in results:
+    print(r)
