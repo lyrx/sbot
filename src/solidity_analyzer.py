@@ -1,8 +1,5 @@
 import os
-
 from src.fileutils import findpaths
-
-
 
 def analyze_solidity_file(file_path, check_structures):
     with open(file_path, 'r') as f:
@@ -20,7 +17,8 @@ def analyze_solidity_file(file_path, check_structures):
             findings.append({
                 "file_path": file_path,
                 "check_name": check_name,
-                "message": finding
+                "line": finding["line"],
+                "message": finding["message"]
             })
 
     # If there are no findings, add a "no findings" entry
@@ -28,6 +26,7 @@ def analyze_solidity_file(file_path, check_structures):
         findings.append({
             "file_path": file_path,
             "check_name": "General",
+            "line": None,
             "message": f"{os.path.basename(file_path)}: no findings"
         })
 
@@ -42,16 +41,13 @@ def analyze_solidity_file(file_path, check_structures):
 # findings = analyze_solidity_file('/path/to/solidity/file.sol', check_structures)
 # print(findings)
 
-
-
-
-def analyze_solidity_dir(base_dir, checks):
+def analyze_solidity_dir(base_dir, check_structures):
     """
     Analyzes all Solidity files in a given base directory based on the provided checks.
 
     Parameters:
     - base_dir (str): The base directory to search for Solidity files.
-    - checks (list): A list of checks to perform on each file.
+    - check_structures (list): A list of check structures to perform on each file.
 
     Returns:
     - all_results (dict): A dictionary containing the results of the checks for each file.
@@ -61,11 +57,15 @@ def analyze_solidity_dir(base_dir, checks):
     all_results = {}
 
     for path in paths:
-        all_results[path] = analyze_solidity_file(path, checks)
+        all_results[path] = analyze_solidity_file(path, check_structures)
 
     return all_results
 
 # Example usage:
-# checks = ["Check1", "Check2"]
-# results = analyze_solidity_dir('/path/to/base/directory', checks)
+# Assuming you have some check functions defined, e.g., check1, check2
+# check_structures = [
+#     {"name": "Check 1", "func": check1},
+#     {"name": "Check 2", "func": check2}
+# ]
+# results = analyze_solidity_dir('/path/to/base/directory', check_structures)
 # print(results)

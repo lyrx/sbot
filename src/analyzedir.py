@@ -29,6 +29,7 @@ for file_path, analysis in results.items():
     for i in range(len(analysis)):
         cn = analysis[i]["check_name"]
         msg = analysis[i]["message"]
-        print(f"{cn}: ${msg}")
+        line = analysis[i]["line"]
+        print(f"{cn}: {msg} (Line {line})")
 
     print("-" * 50)  # Separator line for clarity
