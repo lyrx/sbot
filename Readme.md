@@ -5,10 +5,10 @@ This project provides a simple static analyzer for Solidity code to identify com
 ## Features
 
 - Detects usage of outdated Solidity compiler versions.
-- Identifies the use of `pragma experimental`.
-- Checks for potential unlocked ether due to unchecked `send` or `transfer`.
-- Warns about low-level `.call()` usage.
-- Highlights potential misuse of `tx.origin` instead of `msg.sender`.
+- Identifies the use of pragma experimental.
+- Checks for potential unlocked ether due to unchecked send or transfer.
+- Warns about low-level .call() usage.
+- Highlights potential misuse of tx.origin instead of msg.sender.
 - Verifies the presence of function visibility specifiers.
 
 ## Setup
@@ -19,22 +19,31 @@ This project provides a simple static analyzer for Solidity code to identify com
 
 ## Usage
 
-1. Place the Solidity code you want to analyze in a `.sol` file.
+### Analyzing a Single Solidity File
+
+1. Place the Solidity code you want to analyze in a .sol file.
 2. Run the main Python script, providing the path to the Solidity file:
 
-```bash
 python main.py /path/to/your/file.sol
-```
 
 3. Review the output for any potential warnings or issues identified by the analyzer.
+
+### Analyzing a Directory of Solidity Files
+
+1. Ensure all the Solidity files you want to analyze are within a directory.
+2. Run the main Python script, providing the path to the directory:
+
+python main.py /path/to/your/directory/
+
+3. Review the output for any potential warnings or issues identified by the analyzer for each file.
 
 ## Extending the Analyzer
 
 To add more checks:
 
-1. Create a new function in `solidity_checks.py`.
+1. Create a new function in solidity_checks.py.
 2. Ensure your function accepts the Solidity code as a string argument and returns a list of findings.
-3. Import and add your new check function to the `checks` list in `main.py`.
+3. Import and add your new check function to the checks list in main.py.
 
 ## Contributing
 
