@@ -1,6 +1,10 @@
-# Solidity Code Analyzer
 
-This project provides a simple static analyzer for Solidity code to identify common patterns that might indicate potential security vulnerabilities. The analyzer is written in Python and is designed for easy extensibility with additional checks.
+![](images/sbot.png)
+
+# SBOT CODALYZER
+## THE Solidity Code Analyzer
+
+This project provides an extinsable static analyzer for Solidity code to identify common patterns that might indicate potential security vulnerabilities. The analyzer is written in Python and is designed for easy extensibility with additional checks.
 
 ## Features
 
