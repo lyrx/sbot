@@ -1,4 +1,4 @@
-![](images/sbot.png)
+![](../images/sbot.png)
 
 
 Hey everyone, I built a Solidity code analyzer the other day and thought I share it here with you!

@@ -1,6 +1,6 @@
 
 
-![](images/strategy.png)
+![](../images/strategy.png)
 
 ### Definition:
 

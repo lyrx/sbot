@@ -4,7 +4,9 @@
 # SBOT CODALYZER
 ## THE Solidity Code Analyzer
 
-This project provides an extinsable static analyzer for Solidity code to identify common patterns that might indicate potential security vulnerabilities. The analyzer is written in Python and is designed for easy extensibility with additional checks.
+This project provides an extinsable static analyzer for Solidity code to identify common patterns 
+that might indicate potential security vulnerabilities. 
+The analyzer is written in Python and is designed for easy extensibility with additional checks.
 
 ## Features
 
@@ -28,7 +30,7 @@ This project provides an extinsable static analyzer for Solidity code to identif
 1. Place the Solidity code you want to analyze in a .sol file.
 2. Run the main Python script, providing the path to the Solidity file:
 
-python main.py /path/to/your/file.sol
+`python main.py /path/to/your/file.sol`
 
 3. Review the output for any potential warnings or issues identified by the analyzer.
 
@@ -37,7 +39,7 @@ python main.py /path/to/your/file.sol
 1. Ensure all the Solidity files you want to analyze are within a directory.
 2. Run the main Python script, providing the path to the directory:
 
-python main.py /path/to/your/directory/
+`python main.py /path/to/your/directory/`
 
 3. Review the output for any potential warnings or issues identified by the analyzer for each file.
 
