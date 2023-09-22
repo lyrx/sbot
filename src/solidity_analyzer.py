@@ -1,5 +1,5 @@
 import os
-from src.fileutils import findpaths
+from fileutils import findpaths
 
 def analyze_solidity_file(file_path, check_structures):
     with open(file_path, 'r') as f:
