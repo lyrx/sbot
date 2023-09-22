@@ -3,7 +3,7 @@ from bloodhounds import check_structures
 
 # Test
 base_path = "/Users/alex/git/Web3Academy/hats-audit/contracts"
-results = analyze_solidity_dir(base_path, check_structures)
+results = analyze_solidity_dir(base_path, check_structures["initial"])
 for file_path, analysis in results.items():
     print(f"File: {file_path}")
     for i in range(len(analysis)):

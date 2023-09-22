@@ -3,6 +3,6 @@ from bloodhounds import check_structures
 
 # Test
 file_path = "/Users/alex/git/Web3Academy/hats-audit/contracts/CvgControlTower.sol"
-results = analyze_solidity_file(file_path, check_structures)
+results = analyze_solidity_file(file_path, check_structures["initial"])
 for r in results:
     print(r)
