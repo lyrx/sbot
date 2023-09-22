@@ -1,11 +1,10 @@
-
 ![](images/sbot.png)
 
 # SBOT CODALYZER
-## THE Solidity Code Analyzer
+## THE Source Code Analyzer
 
-This project provides an extinsable static analyzer for Solidity code to identify common patterns 
-that might indicate potential security vulnerabilities. 
+This project provides an extensible static analyzer for Source code to identify common patterns
+that might indicate potential security vulnerabilities.
 The analyzer is written in Python and is designed for easy extensibility with additional checks.
 
 ## Features
@@ -25,31 +24,48 @@ The analyzer is written in Python and is designed for easy extensibility with ad
 
 ## Usage
 
-### Analyzing a Single Solidity File
+### Analyzing a Single Source File
 
-1. Place the Solidity code you want to analyze in a .sol file.
-2. Run the main Python script, providing the path to the Solidity file:
+1. Place the Source code you want to analyze in a .sol file.
+2. Use the provided shell script to run the analyzer, providing the path to the Source file:
 
-`python main.py /path/to/your/file.sol`
+`./analyze_file.sh </path/to/your/file.sol>`
 
 3. Review the output for any potential warnings or issues identified by the analyzer.
 
-### Analyzing a Directory of Solidity Files
+### Analyzing a Directory of Source Files
 
-1. Ensure all the Solidity files you want to analyze are within a directory.
-2. Run the main Python script, providing the path to the directory:
+1. Ensure all the Source files you want to analyze are within a directory.
+2. Use the provided shell script to run the analyzer, providing the path to the directory:
 
-`python main.py /path/to/your/directory/`
+`./analyze_dir.sh </path/to/your/directory/>`
 
 3. Review the output for any potential warnings or issues identified by the analyzer for each file.
 
-## Extending the Analyzer
 
-To add more checks:
 
-1. Create a new function in solidity_checks.py.
-2. Ensure your function accepts the Solidity code as a string argument and returns a list of findings.
-3. Import and add your new check function to the checks list in main.py.
+## Extending the  Analyzer
+
+The Source Analyzer is structured for easy extensibility. The core checks are stored in the `check_structures` dictionary. Within this dictionary, the "initial" key points to a list of checks. Each check is a dictionary containing two key-value pairs: "name" and "func".
+
+### Steps to Add a New Check:
+
+1. **Write the Check Function**: Create a new function in `solidity_checks.py`. This function should accept the Source code as a string argument and return a list of findings.
+
+   Example:
+   ```def new_check_function(code_string):
+       # Your check logic here
+       return findings```
+
+2. **Import the Check Function**: At the beginning of your main script (or wherever `check_structures` is defined), import your new check function:
+
+   ```from solidity_checks import new_check_function```
+
+3. **Add the Check to the Structure**: Extend the `check_structures` dictionary by adding a new dictionary to the list associated with the "initial" key:
+
+   ```{"name": "Descriptive Name of the Check", "func": new_check_function}```
+
+By following these steps, your new check will be integrated into the analyzer and will be executed when the script runs.
 
 ## Contributing
 
