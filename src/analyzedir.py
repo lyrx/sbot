@@ -3,7 +3,7 @@ from solidity_analyzer import analyze_solidity_dir
 from bloodhounds import check_structures
 
 if len(sys.argv) < 3:
-    print("Usage: python analyze_solidity.py <base_path> <key>")
+    print("Usage: python analyzedir.py <base_path> <key>")
     sys.exit(1)
 
 base_path = sys.argv[1]

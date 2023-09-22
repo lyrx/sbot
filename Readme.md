@@ -27,20 +27,21 @@ The analyzer is written in Python and is designed for easy extensibility with ad
 ### Analyzing a Single Source File
 
 1. Place the Source code you want to analyze in a .sol file.
-2. Use the provided shell script to run the analyzer, providing the path to the Source file:
+2. Use the provided shell script to run the analyzer, providing the path to the Source file
+3. Use the key as defined in `bloodhounds.py#check_structures`:
 
-`./analyze_file.sh </path/to/your/file.sol>`
+`./analyze_file.sh </path/to/your/file.sol> <KEY_OF_BLOUDHOUNDS_CAGE>`
 
-3. Review the output for any potential warnings or issues identified by the analyzer.
+Review the output for any potential warnings or issues identified by the analyzer.
 
 ### Analyzing a Directory of Source Files
 
 1. Ensure all the Source files you want to analyze are within a directory.
 2. Use the provided shell script to run the analyzer, providing the path to the directory:
 
-`./analyze_dir.sh </path/to/your/directory/>`
+`./analyze_dir.sh </path/to/your/directory/> <KEY_OF_BLOUDHOUNDS_CAGE>`
 
-3. Review the output for any potential warnings or issues identified by the analyzer for each file.
+Review the output for any potential warnings or issues identified by the analyzer for each file.
 
 
 
