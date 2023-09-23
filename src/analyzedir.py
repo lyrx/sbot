@@ -26,14 +26,19 @@ def handle_parameters():
 
     return base_path, key, githubDir
 
-def display_analysis(results):
+def display_analysis(results, base_path, githubDir=None):
     """
     Display the analysis results for each file.
 
     Parameters:
     - results (dict): A dictionary containing file paths as keys and their corresponding analysis as values.
+    - base_path (str): The base path for the analysis.
+    - githubDir (str, optional): The path to the sources on GitHub.
     """
     for file_path, analysis in results.items():
+        # Compute the RELATIVE_PATH
+        relative_path = file_path.replace(base_path, '').lstrip('/')
+
         # Only process and print results if the analysis for the file has content
         if len(analysis) > 0:
             print(f"File: {file_path}")
@@ -41,6 +46,10 @@ def display_analysis(results):
                 cn = analysis[i]["check_name"]
                 msg = analysis[i]["message"]
                 line = analysis[i]["line"]
+                # Construct the link to the source line in GitHub
+                if githubDir:
+                    github_link = f"{githubDir}/{relative_path}#L{line}"
+                    print(f"Source Link: {github_link}")
                 print(f"{cn}: {msg} (Line {line})")
 
             print("-" * 50)  # Separator line for clarity
@@ -48,12 +57,7 @@ def display_analysis(results):
 def main():
     base_path, key, githubDir = handle_parameters()
     results = analyze_solidity_dir(base_path, check_structures[key])
-    display_analysis(results)
-
-    # If githubDir is provided, you can add further processing or actions related to it here.
-    if githubDir:
-        print(f"GitHub Directory: {githubDir}")
-        # Add any additional logic related to the GitHub directory here.
+    display_analysis(results, base_path, githubDir)
 
 if __name__ == "__main__":
     main()
