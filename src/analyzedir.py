@@ -1,3 +1,4 @@
+import os
 import sys
 from solidity_analyzer import analyze_solidity_dir
 from bloodhounds import check_structures
@@ -41,7 +42,7 @@ def display_analysis(results, base_path, githubDir=None):
 
         # Only process and print results if the analysis for the file has content
         if len(analysis) > 0:
-            print(f"File: {file_path}")
+            print(f"Contract: {os.path.basename(file_path)}")
             for i in range(len(analysis)):
                 cn = analysis[i]["check_name"]
                 msg = analysis[i]["message"]
