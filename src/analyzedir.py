@@ -2,6 +2,26 @@ import sys
 from solidity_analyzer import analyze_solidity_dir
 from bloodhounds import check_structures
 
+def handle_parameters():
+    """
+    Handle command-line parameters and return the base path and key.
+
+    Returns:
+    - tuple: A tuple containing the base path and key.
+    """
+    if len(sys.argv) < 3:
+        print("Usage: python analyzedir.py <base_path> <key>")
+        sys.exit(1)
+
+    base_path = sys.argv[1]
+    key = sys.argv[2]
+
+    if key not in check_structures:
+        print(f"Key '{key}' not found in check_structures.")
+        sys.exit(1)
+
+    return base_path, key
+
 def display_analysis(results):
     """
     Display the analysis results for each file.
@@ -21,16 +41,10 @@ def display_analysis(results):
 
             print("-" * 50)  # Separator line for clarity
 
-if len(sys.argv) < 3:
-    print("Usage: python analyzedir.py <base_path> <key>")
-    sys.exit(1)
+def main():
+    base_path, key = handle_parameters()
+    results = analyze_solidity_dir(base_path, check_structures[key])
+    display_analysis(results)
 
-base_path = sys.argv[1]
-key = sys.argv[2]
-
-if key not in check_structures:
-    print(f"Key '{key}' not found in check_structures.")
-    sys.exit(1)
-
-results = analyze_solidity_dir(base_path, check_structures[key])
-display_analysis(results)
+if __name__ == "__main__":
+    main()
