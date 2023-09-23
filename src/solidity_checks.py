@@ -1,8 +1,11 @@
-import re
+import regex as re
+
+
 
 # Helper function to get line number
 def get_line_number(code, index):
     return code.count('\n', 0, index) + 1
+
 
 def check_outdated_versions(code):
     results = []
@@ -14,6 +17,7 @@ def check_outdated_versions(code):
             results.append({'line': line_no, 'message': message})
     return results
 
+
 def check_pragma_experimental(code):
     results = []
     for match in re.finditer('pragma experimental', code):
@@ -21,6 +25,7 @@ def check_pragma_experimental(code):
         message = "Warning: The code uses 'pragma experimental'. This can introduce instability."
         results.append({'line': line_no, 'message': message})
     return results
+
 
 def check_send_transfer(code):
     results = []
@@ -31,6 +36,7 @@ def check_send_transfer(code):
         results.append({'line': line_no, 'message': message})
     return results
 
+
 def check_low_level_call(code):
     results = []
     for match in re.finditer(r'\.call\(', code):
@@ -39,6 +45,7 @@ def check_low_level_call(code):
         results.append({'line': line_no, 'message': message})
     return results
 
+
 def check_tx_origin(code):
     results = []
     for match in re.finditer('tx.origin', code):
@@ -46,6 +53,7 @@ def check_tx_origin(code):
         message = "Warning: 'tx.origin' detected. It can be manipulated by malicious contracts. Consider using 'msg.sender' instead."
         results.append({'line': line_no, 'message': message})
     return results
+
 
 def check_visibility_specifiers(code):
     results = []
@@ -58,42 +66,26 @@ def check_visibility_specifiers(code):
             message = f"Warning: The function '{function}' does not have a visibility specifier."
             results.append({'line': line_no, 'message': message})
     return results
-
-
-import re
-
 def check_storage_initialization(code):
-    """
-    Checks for storage variable initializations in Solidity code that go from zero to non-zero.
-
-    Initializing a storage variable is one of the most expensive operations a contract can do.
-    When a storage variable goes from zero to non-zero, the user must pay 22,100 gas total
-    (20,000 gas for a zero to non-zero write and 2,100 for a cold storage access).
-    This is why the Openzeppelin reentrancy guard registers functions as active or not with
-    1 and 2 rather than 0 and 1. It only costs 5,000 gas to alter a storage variable from
-    non-zero to non-zero.
-
-    Parameters:
-    - code (str): The Solidity code to be checked.
-
-    Returns:
-    - list: A list of warnings with line numbers where storage variables are initialized to non-zero values.
-    """
-
     results = []
 
     # Pattern to match storage variable declarations
-    storage_var_pattern = re.compile(r'(uint[0-9]*|int[0-9]*|address|bool|string|bytes[0-9]*)\s+([\w_]+);')
-    storage_vars = [match.group(2) for match in storage_var_pattern.finditer(code)]
+    storage_var_pattern = re.compile(r'(uint[0-9]*|int[0-9]*|address|bool|string|bytes[0-9]*)\s+(public)?\s+([\w_]+);')
+    storage_vars = [match.group(3) for match in storage_var_pattern.finditer(code)]
 
-    # Check if any storage variable is initialized to non-zero in the code
+    # Pattern to match function bodies, excluding the outermost curly braces
+    function_body_pattern = re.compile(r'\bfunction\b[^{]*{((?:[^{}]|(?R))*)}', re.DOTALL)
+    function_bodies_matches = [match for match in function_body_pattern.finditer(code)]
+
+    # Check if any storage variable is initialized to non-zero inside function bodies
     for var in storage_vars:
         non_zero_init_pattern = re.compile(rf'{var}\s*=\s*[^0\s;]+;')
-        for match in non_zero_init_pattern.finditer(code):
-            line_no = get_line_number(code, match.start())
-            message = f"Warning: The storage variable '{var}' is initialized to a non-zero value. This can be expensive in terms of gas."
-            results.append({'line': line_no, 'message': message})
+        for match in function_bodies_matches:
+            body = match.group(1)
+            for init_match in non_zero_init_pattern.finditer(body):
+                # Adjust the line number calculation to account for the start of the function body
+                line_no = get_line_number(code, init_match.start() + match.start(1))
+                message = f"Warning: The storage variable '{var}' is set inside a function. This can be expensive in terms of gas."
+                results.append({'line': line_no, 'message': message})
 
     return results
-
-
