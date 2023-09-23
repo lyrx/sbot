@@ -21,14 +21,7 @@ def analyze_solidity_file(file_path, check_structures):
                 "message": finding["message"]
             })
 
-    # If there are no findings, add a "no findings" entry
-    if not findings:
-        findings.append({
-            "file_path": file_path,
-            "check_name": "General",
-            "line": None,
-            "message": f"{os.path.basename(file_path)}: no findings"
-        })
+
 
     return findings
 
