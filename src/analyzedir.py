@@ -4,13 +4,13 @@ from bloodhounds import check_structures
 
 def handle_parameters():
     """
-    Handle command-line parameters and return the base path and key.
+    Handle command-line parameters and return the base path, key, and optional GitHub directory.
 
     Returns:
-    - tuple: A tuple containing the base path and key.
+    - tuple: A tuple containing the base path, key, and optional GitHub directory.
     """
-    if len(sys.argv) < 3:
-        print("Usage: python analyzedir.py <base_path> <key>")
+    if len(sys.argv) < 3 or len(sys.argv) > 4:
+        print("Usage: python analyzedir.py <base_path> <key> [githubDir]")
         sys.exit(1)
 
     base_path = sys.argv[1]
@@ -20,7 +20,11 @@ def handle_parameters():
         print(f"Key '{key}' not found in check_structures.")
         sys.exit(1)
 
-    return base_path, key
+    githubDir = None
+    if len(sys.argv) == 4:
+        githubDir = sys.argv[3]
+
+    return base_path, key, githubDir
 
 def display_analysis(results):
     """
@@ -42,9 +46,14 @@ def display_analysis(results):
             print("-" * 50)  # Separator line for clarity
 
 def main():
-    base_path, key = handle_parameters()
+    base_path, key, githubDir = handle_parameters()
     results = analyze_solidity_dir(base_path, check_structures[key])
     display_analysis(results)
+
+    # If githubDir is provided, you can add further processing or actions related to it here.
+    if githubDir:
+        print(f"GitHub Directory: {githubDir}")
+        # Add any additional logic related to the GitHub directory here.
 
 if __name__ == "__main__":
     main()
