@@ -4,7 +4,8 @@ from solidity_checks import (
     check_send_transfer,
     check_low_level_call,
     check_tx_origin,
-    check_visibility_specifiers
+    check_visibility_specifiers,
+    check_storage_initialization
 )
 
 check_structures = {
@@ -15,5 +16,9 @@ check_structures = {
         {"name": "Low-Level Call", "func": check_low_level_call},
         {"name": "Tx.Origin", "func": check_tx_origin},
         {"name": "Visibility Specifiers", "func": check_visibility_specifiers}
+    ],
+    "rareskills" :   [
+        {"name": "Storage initialization", "func": check_storage_initialization}
     ]
+
 }
